@@ -1,3 +1,7 @@
+Added supporting several dateformates per language
+
+Origin Documentation:
+
 jQuery Datepicker
 =================
 
