@@ -330,7 +330,7 @@
 		dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
 		dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
 		dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],
-		dateFormat: 'dd.mm.yyyy', firstDay: 1,
+		dateFormat: ['dd.mm.yy', 'd.m.', 'd.m', 'd.mm.', 'd.mm', 'dd.mm.', 'dd.mm','d.m.yy', 'dd.mm.yyyy'], firstDay: 1,
 		renderer: $.datepick.defaultRenderer,
 		prevText: '&#x3c;zurück', prevStatus: 'letzten Monat zeigen',
 		prevJumpText: '&#x3c;&#x3c;', prevJumpStatus: '',
@@ -359,7 +359,7 @@
 		dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
 		dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
 		dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],
-		dateFormat: 'dd.mm.yyyy', firstDay: 1,
+		dateFormat: ['dd.mm.yy', 'd.m.', 'd.m', 'd.mm.', 'd.mm', 'dd.mm.', 'dd.mm','d.m.yy', 'dd.mm.yyyy'], firstDay: 1,
 		renderer: $.datepick.defaultRenderer,
 		prevText: '&#x3c;zurück', prevStatus: 'letzten Monat zeigen',
 		prevJumpText: '&#x3c;&#x3c;', prevJumpStatus: '',
@@ -417,7 +417,7 @@
 		dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
 		dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 		dayNamesMin: ['Su','Mo','Tu','We','Th','Fr','Sa'],
-		dateFormat: 'dd/mm/yyyy', firstDay: 1,
+		dateFormat: ['dd/mm/yy', 'd/m', 'd/mm', 'dd/mm', 'd/m/yy', 'dd/mm/yyyy'], firstDay: 1,
 		renderer: $.datepick.defaultRenderer,
 		prevText: 'Prev', prevStatus: 'Show the previous month',
 		prevJumpText: '&#x3c;&#x3c;', prevJumpStatus: 'Show the previous year',
@@ -446,7 +446,7 @@
 		dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
 		dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 		dayNamesMin: ['Su','Mo','Tu','We','Th','Fr','Sa'],
-		dateFormat: 'dd/mm/yyyy', firstDay: 1,
+		dateFormat: ['dd/mm/yy', 'd/m', 'd/mm', 'dd/mm', 'd/m/yy', 'dd/mm/yyyy'], firstDay: 1,
 		renderer: $.datepick.defaultRenderer,
 		prevText: 'Prev', prevStatus: 'Show the previous month',
 		prevJumpText: '&#x3c;&#x3c;', prevJumpStatus: 'Show the previous year',
@@ -475,7 +475,7 @@
 		dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
 		dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 		dayNamesMin: ['Su','Mo','Tu','We','Th','Fr','Sa'],
-		dateFormat: 'dd/mm/yyyy', firstDay: 1,
+		dateFormat: ['dd/mm/yy', 'd/m', 'd/mm', 'dd/mm', 'd/m/yy', 'dd/mm/yyyy'], firstDay: 1,
 		renderer: $.datepick.defaultRenderer,
 		prevText: 'Prev', prevStatus: 'Show the previous month',
 		prevJumpText: '&#x3c;&#x3c;', prevJumpStatus: 'Show the previous year',
@@ -491,6 +491,35 @@
 		isRTL: false
 	};
 	$.datepick.setDefaults($.datepick.regional['en-NZ']);
+})(jQuery);
+/* http://keith-wood.name/datepick.html
+   English US localisation for jQuery Datepicker.
+   Written by MARCS. */
+(function($) {
+	$.datepick.regional['en'] = {
+		monthNames: ['January','February','March','April','May','June',
+		'July','August','September','October','November','December'],
+		monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+		'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+		dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+		dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+		dayNamesMin: ['Su','Mo','Tu','We','Th','Fr','Sa'],
+		dateFormat: ['dd/mm/yy', 'd/m', 'd/mm', 'dd/mm', 'd/m/yy', 'dd/mm/yyyy'], firstDay: 1,
+		renderer: $.datepick.defaultRenderer,
+		prevText: 'Prev', prevStatus: 'Show the previous month',
+		prevJumpText: '&#x3c;&#x3c;', prevJumpStatus: 'Show the previous year',
+		nextText: 'Next', nextStatus: 'Show the next month',
+		nextJumpText: '&#x3e;&#x3e;', nextJumpStatus: 'Show the next year',
+		currentText: 'Current', currentStatus: 'Show the current month',
+		todayText: 'Today', todayStatus: 'Show today\'s month',
+		clearText: 'Clear', clearStatus: 'Erase the current date',
+		closeText: 'Done', closeStatus: 'Close without change',
+		yearStatus: 'Show a different year', monthStatus: 'Show a different month',
+		weekText: 'Wk', weekStatus: 'Week of the year',
+		dayStatus: 'Select DD, M d', defaultStatus: 'Select a date',
+		isRTL: false
+	};
+	$.datepick.setDefaults($.datepick.regional['en-GB']);
 })(jQuery);
 /* http://keith-wood.name/datepick.html
    Esperanto localisation for jQuery Datepicker.
@@ -610,10 +639,10 @@
 })(jQuery);
 ﻿/* http://keith-wood.name/datepick.html
    Estonian localisation for jQuery Datepicker.
-   Written by Mart Sõmermaa (mrts.pydev at gmail com). */ 
+   Written by Mart Sõmermaa (mrts.pydev at gmail com). */
 (function($) {
 	$.datepick.regional['et'] = {
-		monthNames: ['Jaanuar','Veebruar','Märts','Aprill','Mai','Juuni', 
+		monthNames: ['Jaanuar','Veebruar','Märts','Aprill','Mai','Juuni',
 			'Juuli','August','September','Oktoober','November','Detsember'],
 		monthNamesShort: ['Jaan', 'Veebr', 'Märts', 'Apr', 'Mai', 'Juuni',
 			'Juuli', 'Aug', 'Sept', 'Okt', 'Nov', 'Dets'],
@@ -864,7 +893,7 @@
 		closeText: 'બંધ કરો', closeStatus: 'તારીખ પસંદ કર્યા વગર બંધ કરો',
 		yearStatus: 'જુદુ વર્ષ બતાવો', monthStatus: 'જુદો મહિનો બતાવો',
 		weekText: 'અઠવાડિયું', weekStatus: 'અઠવાડિયું',
-		dayStatus: 'અઠવાડિયાનો પહેલો દિવસ પસંદ કરો', defaultStatus: 'તારીખ પસંદ કરો',		
+		dayStatus: 'અઠવાડિયાનો પહેલો દિવસ પસંદ કરો', defaultStatus: 'તારીખ પસંદ કરો',
 		isRTL: false
 	};
 	$.datepick.setDefaults($.datepick.regional['gu']);
@@ -1608,18 +1637,18 @@
 		dayNames: ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'],
 		dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],
 		dayNamesMin: ['D','S','T','Q','Q','S','S'],
-		dateFormat: 'dd/mm/yyyy', firstDay: 0, 
+		dateFormat: 'dd/mm/yyyy', firstDay: 0,
 		renderer: $.datepick.defaultRenderer,
-		prevText: '&lt;Anterior', prevStatus: 'Mostra o mês anterior', 
-		prevJumpText: '&lt;&lt;', prevJumpStatus: 'Mostra o ano anterior', 
-		nextText: 'Próximo&gt;', nextStatus: 'Mostra o próximo mês', 
+		prevText: '&lt;Anterior', prevStatus: 'Mostra o mês anterior',
+		prevJumpText: '&lt;&lt;', prevJumpStatus: 'Mostra o ano anterior',
+		nextText: 'Próximo&gt;', nextStatus: 'Mostra o próximo mês',
 		nextJumpText: '&gt;&gt;', nextJumpStatus: 'Mostra o próximo ano',
 		currentText: 'Atual', currentStatus: 'Mostra o mês atual',
-		todayText: 'Hoje', todayStatus: 'Vai para hoje', 
+		todayText: 'Hoje', todayStatus: 'Vai para hoje',
 		clearText: 'Limpar', clearStatus: 'Limpar data',
 		closeText: 'Fechar', closeStatus: 'Fechar o calendário',
 		yearStatus: 'Selecionar ano', monthStatus: 'Selecionar mês',
-		weekText: 's', weekStatus: 'Semana do ano', 
+		weekText: 's', weekStatus: 'Semana do ano',
 		dayStatus: 'DD, d \'de\' M \'de\' yyyy', defaultStatus: 'Selecione um dia',
 		isRTL: false
 	};
@@ -1637,18 +1666,18 @@
 		dayNames: ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'],
 		dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],
 		dayNamesMin: ['D','S','T','Q','Q','S','S'],
-		dateFormat: 'dd/mm/yyyy', firstDay: 0, 
+		dateFormat: 'dd/mm/yyyy', firstDay: 0,
 		renderer: $.datepick.defaultRenderer,
-		prevText: '&lt;Anterior', prevStatus: 'Mês anterior', 
-		prevJumpText: '&lt;&lt;', prevJumpStatus: 'Ano anterior', 
-		nextText: 'Próximo&gt;', nextStatus: 'Próximo mês', 
+		prevText: '&lt;Anterior', prevStatus: 'Mês anterior',
+		prevJumpText: '&lt;&lt;', prevJumpStatus: 'Ano anterior',
+		nextText: 'Próximo&gt;', nextStatus: 'Próximo mês',
 		nextJumpText: '&gt;&gt;', nextJumpStatus: 'Próximo ano',
 		currentText: 'Atual', currentStatus: 'Mês atual',
-		todayText: 'Hoje', todayStatus: 'Hoje', 
+		todayText: 'Hoje', todayStatus: 'Hoje',
 		clearText: 'Limpar', clearStatus: 'Limpar data',
 		closeText: 'Fechar', closeStatus: 'Fechar o calendário',
 		yearStatus: 'Selecionar ano', monthStatus: 'Selecionar mês',
-		weekText: 's', weekStatus: 'Semana do ano', 
+		weekText: 's', weekStatus: 'Semana do ano',
 		dayStatus: 'DD, d \'de\' M \'de\' yyyy', defaultStatus: 'Selecione um dia',
 		isRTL: false
 	};

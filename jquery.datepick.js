@@ -1,8 +1,8 @@
-﻿/* http://keith-wood.name/datepick.html
+﻿﻿/* http://keith-wood.name/datepick.html
    Date picker for jQuery v4.1.0.
    Written by Keith Wood (kbwood{at}iinet.com.au) February 2010.
-   Dual licensed under the GPL (http://dev.jquery.com/browser/trunk/jquery/GPL-LICENSE.txt) and 
-   MIT (http://dev.jquery.com/browser/trunk/jquery/MIT-LICENSE.txt) licenses. 
+   Dual licensed under the GPL (http://dev.jquery.com/browser/trunk/jquery/GPL-LICENSE.txt) and
+   MIT (http://dev.jquery.com/browser/trunk/jquery/MIT-LICENSE.txt) licenses.
    Please attribute the author if you use it. */
 
 (function($) { // Hide scope, no $ conflict
@@ -110,7 +110,7 @@ $.extend(Datepicker.prototype, {
 	_curMonthClass: 'datepick-month-', // Marker for current month/year
 	_anyYearClass: 'datepick-any-year', // Marker for year direct input
 	_curDoWClass: 'datepick-dow-', // Marker for day of week
-	
+
 	commands: { // Command actions that may be added to a layout by name
 		// name: { // The command name, use '{button:name}' or '{link:name}' in layouts
 		//		text: '', // The field in the regional settings for the displayed text
@@ -458,7 +458,9 @@ $.extend(Datepicker.prototype, {
 	   @throws  errors if the format and/or value are missing,
 	            if the value doesn't match the format,
 	            or if the date is invalid */
-	parseDate: function(format, value, settings) {
+	//MARCS adjusted
+	doParseDate: function(format, value, settings) {
+	// console.log('doParseDate()');
 		if (value == null) {
 			throw 'Invalid arguments';
 		}
@@ -594,6 +596,53 @@ $.extend(Datepicker.prototype, {
 			throw 'Invalid date';
 		}
 		return date;
+	},
+
+	//MARCS adjusted
+	//overrides origin parseDate function
+	parseDate: function(format, value, settings) {
+	// console.log('parseDate(): format: ');
+	// console.log(format);
+	// console.log('parseDate: value: ' + value);
+	// console.log('parseDate: settings: ' + settings);
+
+      var date;
+
+      function testParse(format, value, settings) {
+         if ( !date ) {
+           try {
+              // console.log('testParse with...');
+              // console.log(format);
+              // console.log(value);
+              // console.log(settings);
+
+              date = plugin.doParseDate(format, value, settings);
+              // console.log('NO_ERROR: ' + date);
+           } catch (Error) {
+              //do nothing
+              // console.log('ERROOOOR');
+           }
+         }else{
+            // console.log('date already set:' + date);
+         }
+      }
+
+      if(format){
+         for(var n = 0, stop = format.length; n < stop; n++){
+            // console.log('loop parse...format: ' + format[n]);
+            testParse(format[n], value, settings);
+         }
+      }else if(settings){
+         for(var n = 0, stop = settings.length; n < stop; n++){
+            // console.log('loop parse...settings: ' + settings[n]);
+            testParse(format, value, settings[n]);
+         }
+      }
+
+      // console.log('parseDate Return: date: ');
+      // console.log(date);
+
+      return date;
 	},
 
 	/* A date may be specified as an exact value or a relative one.
@@ -906,24 +955,55 @@ $.extend(Datepicker.prototype, {
 		if (inst.options.autoSize && !inst.inline) {
 			var date = plugin.newDate(2009, 10, 20); // Ensure double digits
 			var dateFormat = inst.options.dateFormat;
-			if (dateFormat.match(/[DM]/)) {
-				var findMax = function(names) {
-					var max = 0;
-					var maxI = 0;
-					for (var i = 0; i < names.length; i++) {
-						if (names[i].length > max) {
-							max = names[i].length;
-							maxI = i;
+			//MARCS ADJUSTED
+			if(typeof dateFormat == 'string'){
+				if (dateFormat.match(/[DM]/)) {
+					var findMax = function(names) {
+						var max = 0;
+						var maxI = 0;
+						for (var i = 0; i < names.length; i++) {
+							if (names[i].length > max) {
+								max = names[i].length;
+								maxI = i;
+							}
 						}
-					}
-					return maxI;
-				};
-				date.setMonth(findMax(inst.options[dateFormat.match(/MM/) ? // Longest month
-					'monthNames' : 'monthNamesShort']));
-				date.setDate(findMax(inst.options[dateFormat.match(/DD/) ? // Longest day
-					'dayNames' : 'dayNamesShort']) + 20 - date.getDay());
+						return maxI;
+					};
+					date.setMonth(findMax(inst.options[dateFormat.match(/MM/) ? // Longest month
+						'monthNames' : 'monthNamesShort']));
+					date.setDate(findMax(inst.options[dateFormat.match(/DD/) ? // Longest day
+						'dayNames' : 'dayNamesShort']) + 20 - date.getDay());
+				}
+				inst.target.attr('size', plugin.formatDate(dateFormat, date, inst.getConfig()).length);
+			} else {
+				// when default date can be chosen then change here back
+				// var maxDf = 0;
+				var idxDf = 0;
+				// for(var df = 0; df < dateFormat.length; df++){
+				// 	if(dateFormat[df].length > maxDf){
+				// 		maxDf = dateFormat[df].length;
+				// 		idxDf = df;
+				// 	}
+				// }
+				if (dateFormat[idxDf].match(/[DM]/)) {
+					var findMax = function(names) {
+						var max = 0;
+						var maxI = 0;
+						for (var i = 0; i < names.length; i++) {
+							if (names[i].length > max) {
+								max = names[i].length;
+								maxI = i;
+							}
+						}
+						return maxI;
+					};
+					date.setMonth(findMax(inst.options[dateFormat[idxDf].match(/MM/) ? // Longest month
+						'monthNames' : 'monthNamesShort']));
+					date.setDate(findMax(inst.options[dateFormat[idxDf].match(/DD/) ? // Longest day
+						'dayNames' : 'dayNamesShort']) + 20 - date.getDay());
+				}
+				inst.target.attr('size', plugin.formatDate(dateFormat[idxDf], date, inst.getConfig()).length);
 			}
-			inst.target.attr('size', plugin.formatDate(dateFormat, date, inst.getConfig()).length);
 		}
 	},
 
@@ -1146,7 +1226,8 @@ $.extend(Datepicker.prototype, {
 					}
 				}
 				inst.div.html(this._generateContent(target[0], inst));
-				target.focus();
+				//MARCS adjusted: fix "double" click necessary in datepicker with inputfield onblur
+				//target.focus();
 			}
 		}
 	},
@@ -1162,11 +1243,24 @@ $.extend(Datepicker.prototype, {
 			var sep = (inst.options.multiSelect ? inst.options.multiSeparator :
 				inst.options.rangeSeparator);
 			var altFormat = inst.options.altFormat || inst.options.dateFormat;
-			for (var i = 0; i < inst.selectedDates.length; i++) {
-				value += (keyUp ? '' : (i > 0 ? sep : '') + plugin.formatDate(
-					inst.options.dateFormat, inst.selectedDates[i], inst.getConfig()));
-				altValue += (i > 0 ? sep : '') + plugin.formatDate(
-					altFormat, inst.selectedDates[i], inst.getConfig());
+
+			//MARCS adjusted
+			if(typeof inst.options.dateFormat  == 'string'){
+				// console.log('_updateInput: IS_STRING');
+				for (var i = 0; i < inst.selectedDates.length; i++) {
+					value += (keyUp ? '' : (i > 0 ? sep : '') + plugin.formatDate(
+						inst.options.dateFormat, inst.selectedDates[i], inst.getConfig()));
+					altValue += (i > 0 ? sep : '') + plugin.formatDate(
+						altFormat, inst.selectedDates[i], inst.getConfig());
+				}
+			} else {
+				// console.log('_updateInput: IS_ARRAY');
+				for (var i = 0; i < inst.selectedDates.length; i++) {
+					value += (keyUp ? '' : (i > 0 ? sep : '') + plugin.formatDate(
+						inst.options.dateFormat[0], inst.selectedDates[i], inst.getConfig()));
+					altValue += (i > 0 ? sep : '') + plugin.formatDate(
+						altFormat, inst.selectedDates[i], inst.getConfig());
+				}
 			}
 			if (!inst.inline && !keyUp) {
 				$(target).val(value);
@@ -1369,39 +1463,82 @@ $.extend(Datepicker.prototype, {
 		var literal = false;
 		var hasNum = false;
 		var dateFormat = inst.options.dateFormat;
-		for (var i = 0; i < dateFormat.length; i++) {
-			var ch = dateFormat.charAt(i);
-			if (literal) {
-				if (ch == "'" && dateFormat.charAt(i + 1) != "'") {
-					literal = false;
+
+		//MARCS adjusted
+		if(typeof dateFormat  == 'string'){
+			// console.log('_allowedChars IS_STRING');
+			for (var i = 0; i < dateFormat.length; i++) {
+				var ch = dateFormat.charAt(i);
+				if (literal) {
+					if (ch == "'" && dateFormat.charAt(i + 1) != "'") {
+						literal = false;
+					}
+					else {
+						allowedChars += ch;
+					}
 				}
 				else {
-					allowedChars += ch;
+					switch (ch) {
+						case 'd': case 'm': case 'o': case 'w':
+							allowedChars += (hasNum ? '' : '0123456789'); hasNum = true; break;
+						case 'y': case '@': case '!':
+							allowedChars += (hasNum ? '' : '0123456789') + '-'; hasNum = true; break;
+						case 'J':
+							allowedChars += (hasNum ? '' : '0123456789') + '-.'; hasNum = true; break;
+						case 'D': case 'M': case 'Y':
+							return null; // Accept anything
+						case "'":
+							if (dateFormat.charAt(i + 1) == "'") {
+								allowedChars += "'";
+							}
+							else {
+								literal = true;
+							}
+							break;
+						default:
+							allowedChars += ch;
+					}
 				}
 			}
-			else {
-				switch (ch) {
-					case 'd': case 'm': case 'o': case 'w':
-						allowedChars += (hasNum ? '' : '0123456789'); hasNum = true; break;
-					case 'y': case '@': case '!':
-						allowedChars += (hasNum ? '' : '0123456789') + '-'; hasNum = true; break;
-					case 'J':
-						allowedChars += (hasNum ? '' : '0123456789') + '-.'; hasNum = true; break;
-					case 'D': case 'M': case 'Y':
-						return null; // Accept anything
-					case "'":
-						if (dateFormat.charAt(i + 1) == "'") {
-							allowedChars += "'";
+		} else {
+			// console.log('_allowedChars IS_ARRAY');
+			for (var fi = 0; fi < dateFormat.length; fi++) {
+				for (var i = 0; i < dateFormat[fi].length; i++) {
+					var ch = dateFormat[fi].charAt(i);
+					if (literal) {
+						if (ch == "'" && dateFormat[fi].charAt(i + 1) != "'") {
+							literal = false;
 						}
 						else {
-							literal = true;
+							allowedChars += ch;
 						}
-						break;
-					default:
-						allowedChars += ch;
+					}
+					else {
+						switch (ch) {
+							case 'd': case 'm': case 'o': case 'w':
+								allowedChars += (hasNum ? '' : '0123456789'); hasNum = true; break;
+							case 'y': case '@': case '!':
+								allowedChars += (hasNum ? '' : '0123456789') + '-'; hasNum = true; break;
+							case 'J':
+								allowedChars += (hasNum ? '' : '0123456789') + '-.'; hasNum = true; break;
+							case 'D': case 'M': case 'Y':
+								return null; // Accept anything
+							case "'":
+								if (dateFormat[fi].charAt(i + 1) == "'") {
+									allowedChars += "'";
+								}
+								else {
+									literal = true;
+								}
+								break;
+							default:
+								allowedChars += ch;
+						}
+					}
 				}
 			}
 		}
+		//console.log('_allowedChars: ' + allowedChars);
 		return allowedChars;
 	},
 
@@ -1582,7 +1719,7 @@ $.extend(Datepicker.prototype, {
 			inst.prevDate = plugin.newDate(inst.drawDate);
 			var show = this._checkMinMax((year != null ?
 				plugin.newDate(year, month, 1) : plugin.today()), inst);
-			inst.drawDate = plugin.newDate(show.getFullYear(), show.getMonth() + 1, 
+			inst.drawDate = plugin.newDate(show.getFullYear(), show.getMonth() + 1,
 				(day != null ? day : Math.min(inst.drawDate.getDate(),
 				plugin.daysInMonth(show.getFullYear(), show.getMonth() + 1))));
 			this._update(target);
