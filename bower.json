@@ -1,0 +1,25 @@
+{
+  "name": "datepickExt",
+  "version": "4.1.0",
+  "homepage": "http://keith-wood.name/datepick.html",
+  "authors": [
+    "Keith Wood <kbwood{at}iinet.com.au>"
+  ],
+  "description": "jQuery Datepicker of http://keith-wood.name/datepick.html, enhanced by supporting several dateformats per langauge",
+  "main": "jquery.datepick.js",
+  "keywords": [
+    "jquery",
+    "datepick",
+    "keith",
+    "wood"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
