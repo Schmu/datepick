@@ -6,7 +6,7 @@
     "Keith Wood <kbwood{at}iinet.com.au>"
   ],
   "description": "jQuery Datepicker of http://keith-wood.name/datepick.html, enhanced by supporting several dateformats per langauge",
-  "main": "jquery.datepick.js",
+  "main": "jquery.datepick.all.js",
   "keywords": [
     "jquery",
     "datepick",
